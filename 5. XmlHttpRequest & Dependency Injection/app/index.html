@@ -1,0 +1,53 @@
+<!doctype html>
+<html ng-app ng-controller="PhoneListCtrl">
+    <head>
+		<meta charset="utf-8">
+		<title ng-bind-template="Google Phone Gallery: {{query}} order by: {{orderProp}}">Google Phone Gallery</title>
+		<link rel="stylesheet" href="..\..\..\css\app.css">
+		<link rel="stylesheet" href="..\..\..\css\bootstrap.css">
+        <script src="..\..\..\angular.js"></script>
+		<script>
+			var PhoneListCtrl = ['$scope', '$http', function($scope, $http) {
+			
+			  $http.get('phones/phones.json').success(function(data){
+				$scope.phones = data.splice(0,5);
+			  });
+			
+			  $scope.hello = "Hello World!";
+			  $scope.orderProp = "name";
+			}];
+			
+		</script>
+    </head>
+    <body>
+		<div class="container-fluid">
+		  <div class="row-fluid">
+			<div class="span2">
+			  <!--Sidebar content-->
+
+			  Search: <input ng-model="query">
+			  Order by:
+			  <select ng-model="orderProp">
+				<option value=""></option>
+				<option value="name">Alphabetical</option>
+				<option value="age">Age</option>
+			  </select>
+
+			</div>
+			<div class="span10">
+			  <!--Body content-->
+
+			  <ul class="phones">
+				<li ng-repeat="phone in phones | filter:query | orderBy: orderProp">
+				  {{phone.name}}
+				<p>{{phone.snippet}}</p>
+				</li>
+			  </ul>
+
+			</div>
+		  </div>
+		</div>
+		
+		<div>{{phones | json}}</div>
+    </body>
+</html>
