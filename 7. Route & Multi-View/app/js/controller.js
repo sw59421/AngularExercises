@@ -8,6 +8,8 @@ var PhoneListCtrl = ['$scope', '$http', function($scope, $http) {
 	$scope.orderProp = "name";
 }];
 
-function PhoneDetailCtrl($scope, $routeParams) {
-	$scope.phoneId = $routeParams.phoneId;
+function PhoneDetailCtrl($scope, $http, $routeParams) {
+	$http.get('phones/' + $routeParams.phoneId + '.json').success(function(data) {
+		$scope.phone = data;
+	});
 }
